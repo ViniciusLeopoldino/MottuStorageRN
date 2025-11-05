@@ -56,49 +56,42 @@ export default function CadastroVeiculo() {
     }
   };
 
-  const handleSaveAndPrint = async () => {
-    setMensagem('');
-    setTipoMensagem('');
+const handleSaveAndPrint = async () => {
+  setMensagem('');
+  setTipoMensagem('');
 
-    if (!veiculo.placa || !veiculo.chassi) {
-      setMensagem('Placa e Chassi são obrigatórios.');
-      setTipoMensagem('erro');
-      return;
-    }
+  if (!veiculo.placa || !veiculo.chassi) {
+    setMensagem('Placa e Chassi são obrigatórios.');
+    setTipoMensagem('erro');
+    return;
+  }
 
-    setIsLoading(true);
+  setIsLoading(true);
 
-    try {
-      const veiculoSalvo = await api.createVehicle(veiculo);
-      await AsyncStorage.setItem('ultimoCadastroLocal', JSON.stringify(veiculo));
-      setMensagem('Veículo registado com sucesso! A gerar QR Code...');
-      setTipoMensagem('sucesso');
+  try {
+    console.log('Enviando dados para cadastro:', veiculo);
+    
+    const veiculoSalvo = await api.createVehicle(veiculo);
+    console.log('Resposta do servidor:', veiculoSalvo);
+    
+    await AsyncStorage.setItem('ultimoCadastroLocal', JSON.stringify(veiculo));
+    setMensagem('Veículo registado com sucesso! QR Code gerado.');
+    setTipoMensagem('sucesso');
 
-      const dataString = JSON.stringify(veiculoSalvo);
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(dataString)}&size=300x300`;
+    // Navegar para tela de visualização do QR Code
+    navigation.navigate('QrCodeScreen', { 
+      data: JSON.stringify(veiculoSalvo),
+      veiculo: veiculoSalvo 
+    });
 
-      if (Platform.OS === 'web') {
-        window.open(qrUrl, '_blank');
-      } else {
-        const filename = FileSystem.documentDirectory + 'dpvtech-qr.png';
-        const { uri } = await FileSystem.downloadAsync(qrUrl, filename);
-        const { status } = await MediaLibrary.requestPermissionsAsync();
-
-        if (status === 'granted') {
-          const asset = await MediaLibrary.createAssetAsync(uri);
-          await MediaLibrary.createAlbumAsync('Download', asset, false);
-          Alert.alert('Sucesso', 'QR Code guardado na sua galeria!');
-        } else {
-          Alert.alert('Erro', 'Permissão negada para guardar imagens.');
-        }
-      }
-    } catch (error: any) {
-      setMensagem(error.message || 'Falha ao registar o veículo.');
-      setTipoMensagem('erro');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  } catch (error: any) {
+    console.log('Erro completo:', error);
+    setMensagem(error.message || 'Falha ao registar o veículo.');
+    setTipoMensagem('erro');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <KeyboardAvoidingView style={styles.wrapper} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>

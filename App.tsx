@@ -19,6 +19,7 @@ import SobreApp from './src/screens/SobreApp';
 
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { ThemeProvider } from './src/context/ThemeContext';
+import QrCodeScreen from './src/screens/QrCodeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +40,7 @@ function AppRoutes() {
           <Stack.Screen name="TipoCadastro" component={TipoCadastro} />
           <Stack.Screen name="CadastroVeiculo" component={CadastroVeiculo} />
           <Stack.Screen name="CadastroLocalizacao" component={CadastroLocalizacao} />
+          <Stack.Screen name="QrCodeScreen" component={QrCodeScreen} />
           <Stack.Screen name="Recebimento" component={Recebimento} />
           <Stack.Screen name="Consulta" component={Consulta} />
           <Stack.Screen name="Historico" component={Historico} />

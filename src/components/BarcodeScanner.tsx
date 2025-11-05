@@ -1,6 +1,12 @@
-﻿import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Vibration, Alert } from 'react-native';
-import { RNCamera } from 'react-native-camera';
+﻿import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  Alert
+} from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 
 interface BarcodeScannerProps {
@@ -11,54 +17,60 @@ interface BarcodeScannerProps {
 export default function BarcodeScanner({ onBarcodeScanned, onClose }: BarcodeScannerProps) {
   const theme = useTheme();
   const styles = getStyles(theme);
-  const [scanned, setScanned] = useState(false);
+  const [manualCode, setManualCode] = useState('');
 
-  const handleBarcodeRead = ({ data }: { data: string }) => {
-    if (!scanned && data) {
-      Vibration.vibrate(200);
-      setScanned(true);
-      onBarcodeScanned(data);
-      
-      // Reset após 2 segundos para permitir nova leitura
-      setTimeout(() => setScanned(false), 2000);
+  const handleManualSubmit = () => {
+    if (!manualCode.trim()) {
+      Alert.alert('Aviso', 'Digite ou cole o código QR');
+      return;
     }
+
+    if (manualCode.trim().length < 10) {
+      Alert.alert('Aviso', 'O código parece muito curto. Verifique se está completo.');
+      return;
+    }
+
+    onBarcodeScanned(manualCode);
+    setManualCode('');
   };
 
   return (
     <View style={styles.container}>
-      <RNCamera
-        style={styles.camera}
-        type={RNCamera.Constants.Type.back}
-        flashMode={RNCamera.Constants.FlashMode.auto}
-        captureAudio={false}
-        onBarCodeRead={handleBarcodeRead}
-        barCodeTypes={[
-          RNCamera.Constants.BarCodeType.qr,
-          RNCamera.Constants.BarCodeType.pdf417,
-          RNCamera.Constants.BarCodeType.code128,
-          RNCamera.Constants.BarCodeType.code39,
-          RNCamera.Constants.BarCodeType.ean13,
-          RNCamera.Constants.BarCodeType.ean8,
-          RNCamera.Constants.BarCodeType.upc_e,
-        ]}
-      >
-        {() => (
-          <View style={styles.overlay}>
-            <View style={styles.scanArea}>
-              <View style={styles.cornerTopLeft} />
-              <View style={styles.cornerTopRight} />
-              <View style={styles.cornerBottomLeft} />
-              <View style={styles.cornerBottomRight} />
-            </View>
-            <Text style={styles.instruction}>Aponte para o código de barras</Text>
-            {scanned && <Text style={styles.scannedText}>Código lido!</Text>}
-          </View>
-        )}
-      </RNCamera>
+      <Text style={styles.title}>LEITOR DE QR CODE</Text>
+      <Text style={styles.subtitle}>Modo Manual</Text>
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Cole ou digite o código QR aqui..."
+        placeholderTextColor="#999"
+        multiline
+        numberOfLines={6}
+        textAlignVertical="top"
+        value={manualCode}
+        onChangeText={setManualCode}
+      />
+      
+      <Text style={styles.instruction}>
+        📱 Como obter o código QR:{'\n'}
+        1. Abra o QR Code em outro dispositivo{'\n'}
+        2. Use um app leitor de QR Code{'\n'}
+        3. Copie o texto resultante{'\n'}
+        4. Cole acima
+      </Text>
 
-      {/* Botão fechar */}
+      <Text style={styles.example}>
+        Exemplo de formato esperado:{'\n'}
+        {"{\"id\": 1, \"placa\": \"ABC1234\", \"chassi\": \"...\"}"}
+        {'\n'}
+        {"{\"id\": 1, \"armazem\": \"A1\", \"rua\": \"R1\", ...}"}
+      </Text>
+
+      <TouchableOpacity style={styles.submitButton} onPress={handleManualSubmit}>
+        <Text style={styles.submitButtonText}>PROCESSAR CÓDIGO</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Text style={styles.closeButtonText}>X</Text>
+        <Text style={styles.closeButtonText}>VOLTAR</Text>
       </TouchableOpacity>
     </View>
   );
@@ -67,93 +79,76 @@ export default function BarcodeScanner({ onBarcodeScanned, onClose }: BarcodeSca
 const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: theme.colors.background,
+    padding: 20,
+    paddingTop: 60,
   },
-  camera: {
-    flex: 1,
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: theme.colors.primary,
+    textAlign: 'center',
+    marginBottom: 10,
   },
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.3)',
+  subtitle: {
+    fontSize: 16,
+    color: theme.colors.text,
+    textAlign: 'center',
+    marginBottom: 30,
+    opacity: 0.8,
   },
-  scanArea: {
-    width: 250,
-    height: 150,
+  input: {
+    width: '100%',
     borderWidth: 2,
-    borderColor: 'white',
-    backgroundColor: 'transparent',
-    position: 'relative',
-  },
-  cornerTopLeft: {
-    position: 'absolute',
-    top: -2,
-    left: -2,
-    width: 30,
-    height: 30,
-    borderLeftWidth: 4,
-    borderTopWidth: 4,
     borderColor: theme.colors.primary,
-  },
-  cornerTopRight: {
-    position: 'absolute',
-    top: -2,
-    right: -2,
-    width: 30,
-    height: 30,
-    borderRightWidth: 4,
-    borderTopWidth: 4,
-    borderColor: theme.colors.primary,
-  },
-  cornerBottomLeft: {
-    position: 'absolute',
-    bottom: -2,
-    left: -2,
-    width: 30,
-    height: 30,
-    borderLeftWidth: 4,
-    borderBottomWidth: 4,
-    borderColor: theme.colors.primary,
-  },
-  cornerBottomRight: {
-    position: 'absolute',
-    bottom: -2,
-    right: -2,
-    width: 30,
-    height: 30,
-    borderRightWidth: 4,
-    borderBottomWidth: 4,
-    borderColor: theme.colors.primary,
+    borderRadius: 10,
+    padding: 15,
+    color: theme.colors.text,
+    fontSize: 16,
+    minHeight: 150,
+    marginBottom: 20,
+    textAlignVertical: 'top',
+    backgroundColor: theme.colors.card,
   },
   instruction: {
-    color: 'white',
-    fontSize: 16,
-    marginTop: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  scannedText: {
-    color: 'yellow',
+    color: theme.colors.text,
     fontSize: 14,
-    marginTop: 10,
+    marginBottom: 20,
+    lineHeight: 20,
+    backgroundColor: theme.colors.card,
+    padding: 15,
+    borderRadius: 10,
+  },
+  example: {
+    color: theme.colors.border,
+    fontSize: 12,
+    marginBottom: 30,
+    lineHeight: 16,
+    fontStyle: 'italic',
     textAlign: 'center',
+  },
+  submitButton: {
+    backgroundColor: theme.colors.primary,
+    paddingVertical: 15,
+    borderRadius: 25,
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  submitButtonText: {
+    color: theme.colors.background,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   closeButton: {
-    position: 'absolute',
-    top: 50,
-    right: 20,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
+    padding: 15,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
     alignItems: 'center',
   },
   closeButtonText: {
-    color: 'white',
-    fontSize: 18,
+    color: theme.colors.primary,
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });
