@@ -1,97 +1,106 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Mottu Storage: Gestão Inteligente de Pátio com Visão Computacional
 
-# Getting Started
+## 🎯 Visão Geral do Projeto
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+O **Mottu Storage **é uma solução mobile e IoT desenvolvida para otimizar a gestão e o controle de veículos (motos) em pátios de armazenamento. Utilizando a tecnologia **React Native**, o aplicativo oferece uma interface fluida e nativa para a equipe de campo, enquanto incorpora recursos avançados de **Visão Computacional** (através do scanner de câmera) para automatizar a identificação e a localização dos ativos.
 
-## Step 1: Start Metro
+Este projeto atende a dois grandes desafios: a necessidade de uma aplicação mobile robusta para operações diárias e a integração com um sistema de IoT/Visão Computacional para um fluxo de dados completo e em tempo real.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## ✨ Funcionalidades Principais
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+| Categoria | Funcionalidade | Descrição |
+| --- | --- | --- |
+| **Gestão de Ativos** | Cadastro e Edição | Telas completas para o cadastro e a edição de veículos e localizações no pátio. |
+| **Visão Computacional** | Scanner de QR Code/Código de Barras | Utiliza a câmera do dispositivo como um scanner de visão computacional para leitura rápida e precisa de códigos de identificação (QR Code/Código de Barras) de veículos e locais. |
+| **Rastreamento** | Localização em Tempo Real | Permite a consulta e a visualização da localização exata das motos no pátio, integrando-se ao fluxo de dados de IoT. |
+| **Operações** | Recebimento e Consulta | Fluxos de trabalho dedicados para o recebimento de novos veículos e a consulta de histórico. |
+| **Notificações** | Push Notifications | Implementação de notificações push para alertas em tempo real (ex: nova moto, lembrete, atualização). |
+| **Acessibilidade** | Internacionalização (i18n) | Suporte completo aos idiomas **Português** e **Espanhol**. |
+| **Experiência** | Temas (Light/Dark Mode) | Suporte a temas claro e escuro, garantindo conforto visual em diferentes ambientes. |
 
-```sh
-# Using npm
-npm start
+## 🛠️ Tecnologias Utilizadas
 
-# OR using Yarn
-yarn start
+| Categoria | Tecnologia | Uso |
+| --- | --- | --- |
+| **Frontend** | React Native (TypeScript) | Desenvolvimento da aplicação mobile nativa. |
+| **Backend/DB** | Firebase (Autenticação, Firestore, etc.) | Utilizado para serviços de backend, autenticação e banco de dados em tempo real. |
+| **Visão Computacional** | Câmera/Scanner de Barcode | Módulo de câmera para leitura de códigos (Visão Computacional) para identificação de ativos. |
+| **Integração** | API RESTful | Comunicação com a API de backend (Java) para operações CRUD completas. |
+| **DevOps** | GitHub Actions | Automação do processo de CI/CD. |
+| **Distribuição** | Firebase App Distribution | Publicação e distribuição da versão de testes do aplicativo. |
+
+## 🚀 Deploy Contínuo (CI/CD)
+
+O projeto implementa um fluxo de **Integração Contínua e Entrega Contínua (CI/CD)** robusto, utilizando o **GitHub Actions** para automatizar o processo de build e distribuição.
+
+### GitHub Actions
+
+O pipeline de CI/CD é configurado para:
+
+1. **Build Automático:** A cada `push` para a branch principal, o GitHub Actions dispara o processo de build do aplicativo React Native.
+
+1. **Testes:** Execução de testes automatizados para garantir a qualidade do código.
+
+1. **Distribuição:** Após um build bem-sucedido, o artefato (APK) é automaticamente enviado para o **Firebase App Distribution**.
+
+### Firebase App Distribution
+
+O Firebase é o pilar da distribuição de testes do aplicativo.
+
+- **Publicação:** A versão mais recente do aplicativo é publicada automaticamente no Firebase App Distribution, garantindo que os *testers* tenham acesso imediato às novas funcionalidades.
+
+- **Rastreabilidade:** A tela "Sobre o App" exibe o **hash do commit** de referência, garantindo que a versão instalada pelo *tester* corresponda exatamente ao código-fonte no repositório.
+
+## 💻 Estrutura de Pastas
+
+A arquitetura do código segue o padrão de separação de responsabilidades, promovendo um código limpo, legível e de fácil manutenção.
+
+```
+MottuStorageRN/
+├── android/              # Arquivos nativos Android
+├── ios/                  # Arquivos nativos iOS
+├── src/
+│   ├── components/       # Componentes de UI reutilizáveis (ex: BarcodeScanner.tsx)
+│   ├── config/           # Configurações globais (ex: firebase.ts)
+│   ├── context/          # Contextos globais (ex: AuthContext.tsx, ThemeContext.tsx)
+│   ├── screens/          # Telas principais da aplicação (ex: Home.tsx, Login.tsx, Cadastro.tsx)
+│   ├── services/         # Camada de serviços e lógica de negócio (ex: api.ts, notifications.ts)
+│   └── styles/           # Definições de tema e estilos globais (ex: theme.ts)
+├── App.tsx               # Componente raiz da aplicação
+├── package.json          # Dependências e scripts do projeto
+└── tsconfig.json         # Configurações do TypeScript
 ```
 
-## Step 2: Build and run your app
+## ⚙️ Como Rodar o Projeto Localmente
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### Pré-requisitos
 
-### Android
+- Node.js (versão recomendada)
 
-```sh
-# Using npm
-npm run android
+- Yarn ou npm
 
-# OR using Yarn
-yarn android
-```
+- React Native Environment (Android Studio e/ou Xcode)
 
-### iOS
+- Ruby e Bundler (para iOS)
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### Instalação
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+1. **Clone o repositório:**
 
-```sh
-bundle install
-```
+1. **Instale as dependências:**
 
-Then, and every time you update your native dependencies, run:
+1. **Configuração iOS (Opcional):**
 
-```sh
-bundle exec pod install
-```
+### Execução
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+1. **Inicie o Metro Bundler:**
 
-```sh
-# Using npm
-npm run ios
+1. **Execute a aplicação:**
 
-# OR using Yarn
-yarn ios
-```
+## 👥 Equipe
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+| Nome | RM | GitHub |
+| --- | --- | --- |
+| Vinicius Leopoldino de Oliveira | 557047 | [Link do GitHub](https://github.com/ViniciusLeopoldino) |
+| Pablo Lopes Doria de Andrade | 556834 | [Link do GitHub](https://github.com/Pablo0703)  |
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
