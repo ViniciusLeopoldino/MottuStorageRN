@@ -1,8 +1,10 @@
 # Mottu Storage: Gestão Inteligente de Pátio com Visão Computacional
 
+## ▶️ Vídeo de Apresentação:
+
 ## 🎯 Visão Geral do Projeto
 
-O **Mottu Storage **é uma solução mobile e IoT desenvolvida para otimizar a gestão e o controle de veículos (motos) em pátios de armazenamento. Utilizando a tecnologia **React Native**, o aplicativo oferece uma interface fluida e nativa para a equipe de campo, enquanto incorpora recursos avançados de **Visão Computacional** (através do scanner de câmera) para automatizar a identificação e a localização dos ativos.
+O **Mottu Storage** é uma solução mobile e IoT desenvolvida para otimizar a gestão e o controle de veículos (motos) em pátios de armazenamento. Utilizando a tecnologia **React Native**, o aplicativo oferece uma interface fluida e nativa para a equipe de campo, enquanto incorpora recursos avançados de **Visão Computacional** (através do scanner de câmera) para automatizar a identificação e a localização dos ativos.
 
 Este projeto atende a dois grandes desafios: a necessidade de uma aplicação mobile robusta para operações diárias e a integração com um sistema de IoT/Visão Computacional para um fluxo de dados completo e em tempo real.
 
