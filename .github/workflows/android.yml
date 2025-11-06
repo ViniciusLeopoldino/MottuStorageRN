@@ -50,8 +50,10 @@ jobs:
     - name: Deploy to Firebase App Distribution
       run: |
         echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > firebase-key.json
+        
+        # CORREÇÃO AQUI:
         firebase appdistribution:distribute android/app/build/outputs/apk/release/app-release.apk \
-          --app \${{ secrets.FIREBASE_APP_ID }} \
-          --groups testers \
-          --service-account-file firebase-key.json \
+          --app ${{ secrets.FIREBASE_APP_ID }} \
+          --groups "testers" \
+          --service-account-credentials-file firebase-key.json \
           --release-notes "Build automático - ${{ github.sha }}"
