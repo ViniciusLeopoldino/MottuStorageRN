@@ -45,12 +45,10 @@ jobs:
         path: android/app/build/outputs/apk/release/app-release.apk
         
     - name: Deploy to Firebase App Distribution
-      uses: wzieba/Firebase-Distribution-Github-Action@v1
+      uses: google-github-actions/firebase-app-distribution@v0.6.10
       with:
         appId: \${{ secrets.FIREBASE_APP_ID }}
-        serviceCredentialsFile: firebase-service-account.json
+        serviceCredentials: \${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         groups: testers
+        releaseNotes: "Build automático - ${{ github.sha }}"
         file: android/app/build/outputs/apk/release/app-release.apk
-        
-    - name: Create service account file
-      run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > firebase-service-account.json
