@@ -51,30 +51,37 @@ export default function CadastroLocalizacao() {
   };
 
   const salvarLocalizacao = async () => {
-    setMensagem('');
-    setTipoMensagem('');
+  setMensagem('');
+  setTipoMensagem('');
 
-    if (!localizacao.armazem || !localizacao.rua || !localizacao.modulo || !localizacao.compartimento) {
-      setMensagem('Todos os campos são obrigatórios.');
-      setTipoMensagem('erro');
-      return;
-    }
+  if (!localizacao.armazem || !localizacao.rua || !localizacao.modulo || !localizacao.compartimento) {
+    setMensagem('Todos os campos são obrigatórios.');
+    setTipoMensagem('erro');
+    return;
+  }
 
-    setIsLoading(true);
+  setIsLoading(true);
 
-    try {
-      await api.createLocation(localizacao);
-      await AsyncStorage.setItem('ultimaLocalizacao', JSON.stringify(localizacao));
-      const nome_localizacao = `${localizacao.armazem}-${localizacao.rua}-${localizacao.modulo}-${localizacao.compartimento}`;
-      setMensagem(`Localização guardada com sucesso: ${nome_localizacao}`);
-      setTipoMensagem('sucesso');
-    } catch (err: any) {
-      setMensagem(err.message || 'Erro ao guardar a localização.');
-      setTipoMensagem('erro');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  try {
+    const localizacaoSalva = await api.createLocation(localizacao);
+    await AsyncStorage.setItem('ultimaLocalizacao', JSON.stringify(localizacao));
+    const nome_localizacao = `${localizacao.armazem}-${localizacao.rua}-${localizacao.modulo}-${localizacao.compartimento}`;
+    setMensagem(`Localização guardada com sucesso: ${nome_localizacao}`);
+    setTipoMensagem('sucesso');
+
+    // Navegar para tela de QR Code
+    navigation.navigate('LocalizacaoQrCodeScreen', { 
+      data: JSON.stringify(localizacaoSalva),
+      localizacao: localizacaoSalva
+    });
+
+  } catch (err: any) {
+    setMensagem(err.message || 'Erro ao guardar a localização.');
+    setTipoMensagem('erro');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <View style={styles.wrapper}>
@@ -110,7 +117,7 @@ export default function CadastroLocalizacao() {
           <ActivityIndicator size="large" color={theme.colors.primary} style={{ marginVertical: 15 }} />
         ) : (
           <TouchableOpacity style={styles.button} onPress={salvarLocalizacao}>
-            <Text style={styles.buttonText}>GUARDAR</Text>
+            <Text style={styles.buttonText}>GUARDAR E GERAR QR CODE</Text>
           </TouchableOpacity>
         )}
         
