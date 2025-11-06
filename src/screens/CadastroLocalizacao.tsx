@@ -15,7 +15,7 @@ import { api } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
 
 export default function CadastroLocalizacao() {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
   const navigation = useNavigation();
 
@@ -130,7 +130,7 @@ export default function CadastroLocalizacao() {
   );
 }
 
-const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
+const getStyles = (theme: typeof theme) => StyleSheet.create({
   wrapper: { flex: 1, backgroundColor: theme.colors.background, justifyContent: 'space-between' },
   container: { padding: 20 },
   title: { fontSize: 24, fontWeight: 'bold', color: theme.colors.primary, textAlign: 'center', marginBottom: 30 },

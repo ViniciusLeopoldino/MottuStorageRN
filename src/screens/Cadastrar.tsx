@@ -12,7 +12,7 @@ import { api } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
 
 export default function Register() {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
   const navigation = useNavigation();
 
@@ -134,7 +134,7 @@ export default function Register() {
   );
 }
 
-const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
+const getStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,

@@ -87,17 +87,52 @@ MottuStorageRN/
 
 ### Instalação
 
-1. **Clone o repositório:**
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/ViniciusLeopoldino/MottuStorageRN.git
+    cd MottuStorageRN
+    ```
 
-1. **Instale as dependências:**
+2.  **Instale as dependências:**
+    ```bash
+    yarn install
+    # ou
+    npm install
+    ```
 
-1. **Configuração iOS (Opcional):**
+3.  **Configuração iOS (Opcional):**
+    ```bash
+    # Instala o CocoaPods
+    bundle install
+    cd ios
+    bundle exec pod install
+    cd ..
+    ```
 
 ### Execução
 
-1. **Inicie o Metro Bundler:**
+1.  **Inicie o Metro Bundler:**
+    ```bash
+    yarn start
+    # ou
+    npm start
+    ```
 
-1. **Execute a aplicação:**
+2.  **Execute a aplicação:**
+
+    **Android:**
+    ```bash
+    yarn android
+    # ou
+    npm run android
+    ```
+
+    **iOS:**
+    ```bash
+    yarn ios
+    # ou
+    npm run ios
+    ```
 
 ## 👥 Equipe
 

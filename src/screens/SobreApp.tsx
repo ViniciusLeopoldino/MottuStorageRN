@@ -3,10 +3,10 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, Linking } from "react-
 import { useTheme } from "../context/ThemeContext";
 
 // O commit hash será injetado durante o build
-const COMMIT_HASH = process.env.COMMIT_HASH || "dev";
+const COMMIT_HASH = process.env.COMMIT_HASH || "d710f00";
 
 export default function SobreApp({ navigation }: any) {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
 
   const handleOpenGitHub = () => {
@@ -37,8 +37,8 @@ export default function SobreApp({ navigation }: any) {
         <Text style={styles.buttonText}>VER NO GITHUB</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, { backgroundColor: theme.colors.border }]} onPress={() => navigation.goBack()}>
-        <Text style={styles.buttonText}>VOLTAR</Text>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>VOLTAR</Text>
       </TouchableOpacity>
 
       <Text style={styles.footer}> 2024 DPV-Tech - Todos os direitos reservados</Text>
@@ -46,7 +46,7 @@ export default function SobreApp({ navigation }: any) {
   );
 }
 
-const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
+const getStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -100,6 +100,20 @@ const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
     color: theme.colors.background,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+    backButton: {
+    marginTop: 20,
+    padding: 12,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+    alignItems: 'center',
+    width: '100%',
+  },
+  backButtonText: {
+    color: theme.colors.primary,
+    fontWeight: 'bold',
+    fontSize: 16,
   },
   footer: {
     position: 'absolute',

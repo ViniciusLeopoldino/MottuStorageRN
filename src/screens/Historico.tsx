@@ -31,7 +31,7 @@ interface HistoricoItem {
 }
 
 export default function Historico() {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
   const navigation = useNavigation<any>();
 
@@ -138,7 +138,7 @@ export default function Historico() {
 
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.title}>HISTÓRICO DE RECEBIMENTOS</Text>
+      <Text style={styles.title}>Histórico de Recebimentos</Text>
       {isLoading ? (
         <ActivityIndicator size="large" color={theme.colors.primary} style={{ flex: 1 }} />
       ) : (
@@ -192,7 +192,7 @@ export default function Historico() {
   );
 }
 
-const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
+const getStyles = (theme: any) => StyleSheet.create({
   wrapper: { flex: 1, backgroundColor: theme.colors.background, padding: 20 },
   container: { paddingBottom: 20 },
   title: { color: theme.colors.primary, fontSize: 22, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },

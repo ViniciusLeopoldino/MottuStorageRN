@@ -5,13 +5,13 @@ import { useTheme } from '../context/ThemeContext';
 
 export default function TipoCadastro() {
   const navigation = useNavigation<any>();
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Text style={styles.title}>TIPO DE REGISTO</Text>
+        <Text style={styles.title}>Tipo de Registro</Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('CadastroVeiculo')}
@@ -36,7 +36,7 @@ export default function TipoCadastro() {
   );
 }
 
-const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
+const getStyles = (theme: typeof theme) => StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: theme.colors.background,

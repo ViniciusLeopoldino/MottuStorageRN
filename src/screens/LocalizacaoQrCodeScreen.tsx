@@ -13,7 +13,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function LocalizacaoQrCodeScreen() {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
   const navigation = useNavigation();
   const route = useRoute();
@@ -82,7 +82,7 @@ export default function LocalizacaoQrCodeScreen() {
   );
 }
 
-const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
+const getStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,

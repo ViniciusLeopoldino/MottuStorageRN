@@ -34,7 +34,7 @@ interface ResultadoBusca {
 }
 
 export default function Consulta() {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
   const navigation = useNavigation<any>();
 
@@ -69,7 +69,7 @@ export default function Consulta() {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Text style={styles.title}>CONSULTA DE VEÍCULO</Text>
+        <Text style={styles.title}>Consulta de Veículos</Text>
         <TextInput
           style={styles.input}
           placeholder="Insira PLACA, CHASSI ou CONTRATO"
@@ -119,7 +119,7 @@ export default function Consulta() {
   );
 }
 
-const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
+const getStyles = (theme: any) => StyleSheet.create({
   wrapper: { flex: 1, backgroundColor: theme.colors.background, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, paddingBottom: 30 },
   container: { width: '100%', alignItems: 'center' },
   title: { fontSize: 24, fontWeight: 'bold', color: theme.colors.primary, textAlign: 'center', marginBottom: 20 },

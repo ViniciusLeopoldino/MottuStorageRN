@@ -15,7 +15,7 @@ interface BarcodeScannerProps {
 }
 
 export default function BarcodeScanner({ onBarcodeScanned, onClose }: BarcodeScannerProps) {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
   const [scanned, setScanned] = useState(false);
 

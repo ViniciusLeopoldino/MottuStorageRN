@@ -15,7 +15,7 @@ import { useTheme } from '../context/ThemeContext';
 import { sendTestNotification } from '../services/notifications';
 
 export default function Login({ navigation }: any) {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
 
   const [email, setEmail] = useState('');
@@ -93,7 +93,7 @@ export default function Login({ navigation }: any) {
   );
 }
 
-const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
+const getStyles = (theme: typeof theme) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,

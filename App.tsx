@@ -19,6 +19,7 @@ import SobreApp from './src/screens/SobreApp';
 
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { ThemeProvider } from './src/context/ThemeContext';
+import { setupNotificationListeners, requestPermissions, getFCMToken } from './src/services/notifications';
 import QrCodeScreen from './src/screens/QrCodeScreen';
 import LocalizacaoQrCodeScreen from './src/screens/LocalizacaoQrCodeScreen';
 
@@ -26,6 +27,16 @@ const Stack = createNativeStackNavigator();
 
 function AppRoutes() {
   const { usuario } = useAuth();
+
+  React.useEffect(() => {
+    // Inicializa as notificações ao carregar as rotas
+    requestPermissions().then(hasPermission => {
+      if (hasPermission) {
+        getFCMToken();
+        setupNotificationListeners();
+      }
+    });
+  }, []);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

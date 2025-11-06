@@ -12,7 +12,7 @@ interface HistoricoItem {
 }
 
 export default function EdicaoLocalizacao() {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
   const navigation = useNavigation();
   const route = useRoute();

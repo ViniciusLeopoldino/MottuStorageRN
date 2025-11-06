@@ -19,7 +19,7 @@ import { api } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
 
 export default function CadastroVeiculo() {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const styles = getStyles(theme);
   const navigation = useNavigation();
 
@@ -142,7 +142,7 @@ const handleSaveAndPrint = async () => {
   );
 }
 
-const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
+const getStyles = (theme: typeof theme) => StyleSheet.create({
   wrapper: { flex: 1, backgroundColor: theme.colors.background },
   container: { padding: 20 },
   form: { alignItems: 'center' },

@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+// import Icon from 'react-native-vector-icons/MaterialIcons'; // Removido para simplificar a configuração nativa
 
 export default function Home({ navigation }: any) {
-  const theme = useTheme();
+  const { theme, themePreference, toggleTheme } = useTheme();
   const styles = getStyles(theme);
   const { logout } = useAuth();
 
@@ -62,6 +63,17 @@ export default function Home({ navigation }: any) {
       </View>
 
       <Text style={styles.footer}>Desenvolvido por DPV-Tech</Text>
+      <TouchableOpacity
+        style={styles.themeToggle}
+        onPress={() => {
+          const newPreference = themePreference === 'light' ? 'dark' : 'light';
+          toggleTheme(newPreference);
+        }}
+      >
+        <Text style={{ fontSize: 24 }}>
+          {themePreference === 'light' ? '🌞' : '🌙'}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -120,5 +132,14 @@ const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
     color: theme.colors.border,
     fontSize: 12,
     width: '100%',
+  },
+  themeToggle: {
+    position: 'absolute',
+    bottom: 10,
+    right: 20,
+    padding: 10,
+    borderRadius: 25,
+    backgroundColor: theme.colors.card,
+    zIndex: 10,
   },
 });
