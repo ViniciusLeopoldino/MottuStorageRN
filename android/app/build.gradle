@@ -79,7 +79,7 @@ android {
 
     namespace "com.mottustoragern"
     defaultConfig {
-        applicationId "com.mottustoragern"
+        applicationId "com.mottu.storage"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
