@@ -45,6 +45,7 @@ jobs:
         path: android/app/build/outputs/apk/release/app-release.apk
 
     - name: Deploy to Firebase App Distribution
+      if: github.event_name == 'push'
       uses: wzieba/FireBase-Distribution-Github-Action@v1.7.0
       with:
         appId: ${{ secrets.FIREBASE_APP_ID }}
