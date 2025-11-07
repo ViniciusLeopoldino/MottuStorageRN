@@ -1,6 +1,6 @@
 # Mottu Storage: Gestão Inteligente de Pátio com Visão Computacional
 
-## ▶️ Vídeo de Apresentação:
+## ▶️ Vídeo de Apresentação: [Link do YouTube](https://youtu.be/scofl92qDTw) 
 
 ## 🎯 Visão Geral do Projeto
 
