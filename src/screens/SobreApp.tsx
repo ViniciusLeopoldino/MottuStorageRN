@@ -10,7 +10,7 @@ export default function SobreApp({ navigation }: any) {
   const styles = getStyles(theme);
 
   const handleOpenGitHub = () => {
-    Linking.openURL("https://github.com/ViniciusLeopoldino/MottuStorageFinal");
+    Linking.openURL("https://github.com/ViniciusLeopoldino/MottuStorageRN");
   };
 
   return (

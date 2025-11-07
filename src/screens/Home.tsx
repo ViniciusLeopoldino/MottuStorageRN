@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 // import Icon from 'react-native-vector-icons/MaterialIcons'; // Removido para simplificar a configuração nativa
@@ -16,6 +16,7 @@ export default function Home({ navigation }: any) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
+        <Image source={require('../../assets/icon.png')} style={styles.logo} />
         <Text style={styles.title}>HOME</Text>
 
         <TouchableOpacity
@@ -90,6 +91,12 @@ const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
   container: {
     width: '100%',
     alignItems: 'center',
+  },
+    logo: {
+    width: 180,
+    height: 60,
+    marginBottom: 30,
+    resizeMode: 'contain',
   },
   title: {
     fontSize: 24,
