@@ -75,7 +75,7 @@ MottuStorageRN/
 
 ## 🔄 Fluxo de Trabalho
 
-## 1. Cadastro
+### 1. Cadastro
 
 ### Veículo
 - **Cadastra veículo** → Gera QR Code
@@ -83,17 +83,17 @@ MottuStorageRN/
 ### Localização (Quando necessário) 
 - **Cadastra localização** → Gera QR Code
 
-## 2. Recebimento
+### 2. Recebimento
 
 - **Escaneia QR veículo** → Identifica veículo
 - **Escaneia QR localização** → Identifica posição
 - **Associa veículo à localização**
 
-## 3. Consulta
+### 3. Consulta
 
 - **Consulta em qual posição o veículo está armazenado**
 
-## 4. Histórico
+### 4. Histórico
 
 - **Consulta histórico de veículos armazenados**
 - **Edita ou Exclui veículos armazenados**
